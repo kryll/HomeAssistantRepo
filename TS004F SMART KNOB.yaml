@@ -49,7 +49,7 @@ blueprint:
           entity:
             domain: light
     toggle:
-      name: Toggle (Command/Dimmer mode)
+      name: Toggle test (Command/Dimmer mode)
       selector:
         action:
       default: []
