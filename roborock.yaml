@@ -1,0 +1,359 @@
+type: custom:xiaomi-vacuum-map-card
+map_source:
+  camera: camera.roborock_s7_map
+calibration_source:
+  camera: true
+entity: vacuum.roborock_s7
+vacuum_platform: send_command
+title: ''
+map_locked: true
+two_finger_pan: false
+tiles:
+  - tile_id: Estado
+    entity: vacuum.roborock_s7
+    label: Estado
+    attribute: status
+    icon: mdi:robot-vacuum
+    translations:
+      starting: Iniciado
+      charger_disconnected: Desconectado de la base
+      idle: Idle
+      remote_control_active: Control Remoto activo
+      cleaning: Limpiando
+      returning_home: Volviendo a la Base
+      manual_mode: Modo manual
+      charging: Cargando
+      charging_problem: Problema de Carga
+      paused: Pausado
+      spot_cleaning: Limpieza de Manchas
+      error: Error
+      shutting_down: Apagado
+      updating: Actualizando
+      docking: En la Base
+      going_to_target: Yendo al objetivo
+      zoned_cleaning: Limpiando Zona
+      segment_cleaning: Limpiando Segmento
+      emptying_the_bin: Vaciando Papelera
+      charging_complete: Carga Completa
+      device_offline: Dispositivo Offline
+  - tile_id: battery_level
+    entity: vacuum.roborock_s7
+    label: Batería
+    attribute: battery_level
+    icon: mdi:battery-charging-100
+    unit: '%'
+  - tile_id: fan_speed
+    entity: vacuum.roborock_s7
+    label: Velocidad de Aspirador
+    attribute: fan_speed
+    icon: mdi:fan
+    translations:
+      quiet: Silencioso
+      balanced: Normal
+      turbo: Turbo
+      max: Máximo
+  - tile_id: mop_intensity
+    entity: vacuum.roborock_s7
+    label: Intensidad de fregado
+    attribute: mop_intensity
+    icon: mdi:water
+    translations:
+      'off': Desactivado
+      mild: Leve
+      moderate: Moderado
+      intense: Intenso
+  - tile_id: mop_mode
+    entity: vacuum.roborock_s7
+    label: Ruta de fregado
+    attribute: mop_mode
+    icon: mdi:router
+    translations:
+      standard: Estándar
+      deep: Profundo
+      deep_plus: Profundo +
+icons:
+  - icon: mdi:play
+    conditions:
+      - entity: vacuum.roborock_s7
+        value_not: cleaning
+      - entity: vacuum.roborock_s7
+        value_not: error
+      - entity: vacuum.roborock_s7
+        value_not: returning
+    tooltip: Start
+    tap_action:
+      action: call-service
+      service: vacuum.start
+      service_data:
+        entity_id: vacuum.roborock_s7
+  - icon: mdi:pause
+    conditions:
+      - entity: vacuum.roborock_s7
+        value_not: docked
+      - entity: vacuum.roborock_s7
+        value_not: idle
+      - entity: vacuum.roborock_s7
+        value_not: error
+      - entity: vacuum.roborock_s7
+        value_not: paused
+    tooltip: Pause
+    tap_action:
+      action: call-service
+      service: vacuum.pause
+      service_data:
+        entity_id: vacuum.roborock_s7
+  - icon: mdi:stop
+    conditions:
+      - entity: vacuum.roborock_s7
+        value_not: docked
+      - entity: vacuum.roborock_s7
+        value_not: idle
+      - entity: vacuum.roborock_s7
+        value_not: error
+      - entity: vacuum.roborock_s7
+        value_not: paused
+    tooltip: Stop
+    tap_action:
+      action: call-service
+      service: vacuum.stop
+      service_data:
+        entity_id: vacuum.roborock_s7
+  - icon: mdi:home-map-marker
+    conditions:
+      - entity: vacuum.roborock_s7
+        value_not: docked
+      - entity: vacuum.roborock_s7
+        value_not: returning
+    tooltip: Return to base
+    tap_action:
+      action: call-service
+      service: vacuum.return_to_base
+      service_data:
+        entity_id: vacuum.roborock_s7
+  - icon: mdi:target-variant
+    conditions:
+      - entity: vacuum.roborock_s7
+        value_not: docked
+      - entity: vacuum.roborock_s7
+        value_not: error
+      - entity: vacuum.roborock_s7
+        value_not: cleaning
+      - entity: vacuum.roborock_s7
+        value_not: returning
+    tooltip: Clean spot
+    tap_action:
+      action: call-service
+      service: vacuum.clean_spot
+      service_data:
+        entity_id: vacuum.roborock_s7
+  - icon: mdi:map-marker
+    tooltip: Locate
+    tap_action:
+      action: call-service
+      service: vacuum.locate
+      service_data:
+        entity_id: vacuum.roborock_s7
+  - icon: mdi:fan-remove
+    conditions:
+      - entity: vacuum.roborock_s7
+        attribute: fan_speed
+        value: quiet
+    tooltip: Change fan speed
+    tap_action:
+      action: call-service
+      service: vacuum.set_fan_speed
+      service_data:
+        entity_id: vacuum.roborock_s7
+        fan_speed: balanced
+  - icon: mdi:fan-speed-1
+    conditions:
+      - entity: vacuum.roborock_s7
+        attribute: fan_speed
+        value: balanced
+    tooltip: Change fan speed
+    tap_action:
+      action: call-service
+      service: vacuum.set_fan_speed
+      service_data:
+        entity_id: vacuum.roborock_s7
+        fan_speed: turbo
+  - icon: mdi:fan-speed-2
+    conditions:
+      - entity: vacuum.roborock_s7
+        attribute: fan_speed
+        value: turbo
+    tooltip: Change fan speed
+    tap_action:
+      action: call-service
+      service: vacuum.set_fan_speed
+      service_data:
+        entity_id: vacuum.roborock_s7
+        fan_speed: max
+  - icon: mdi:fan-speed-3
+    conditions:
+      - entity: vacuum.roborock_s7
+        attribute: fan_speed
+        value: max
+    tooltip: Change fan speed
+    tap_action:
+      action: call-service
+      service: vacuum.set_fan_speed
+      service_data:
+        entity_id: vacuum.roborock_s7
+        fan_speed: quiet
+  - icon: mdi:fan-alert
+    conditions:
+      - entity: vacuum.roborock_s7
+        attribute: fan_speed
+        value_not: quiet
+      - entity: vacuum.roborock_s7
+        attribute: fan_speed
+        value_not: balanced
+      - entity: vacuum.roborock_s7
+        attribute: fan_speed
+        value_not: turbo
+      - entity: vacuum.roborock_s7
+        attribute: fan_speed
+        value_not: max
+    tooltip: Change fan speed
+    tap_action:
+      action: call-service
+      service: vacuum.set_fan_speed
+      service_data:
+        entity_id: vacuum.roborock_s7
+        fan_speed: quiet
+  - icon: mdi:water-remove
+    conditions:
+      - entity: vacuum.roborock_s7
+        attribute: mop_intensity
+        value: 'off'
+    tooltip: Change mop intensity
+    tap_action:
+      action: call-service
+      service: select.select_option
+      service_data:
+        entity_id: select.roborock_s7_mop_intensity
+        option: mild
+  - icon: mdi:water-minus
+    conditions:
+      - entity: vacuum.roborock_s7
+        attribute: mop_intensity
+        value: mild
+    tooltip: Change mop intensity
+    tap_action:
+      action: call-service
+      service: select.select_option
+      service_data:
+        entity_id: select.roborock_s7_mop_intensity
+        option: moderate
+  - icon: mdi:water
+    conditions:
+      - entity: vacuum.roborock_s7
+        attribute: mop_intensity
+        value: moderate
+    tooltip: Change mop intensity
+    tap_action:
+      action: call-service
+      service: select.select_option
+      service_data:
+        entity_id: select.roborock_s7_mop_intensity
+        option: intense
+  - icon: mdi:water-plus
+    conditions:
+      - entity: vacuum.roborock_s7
+        attribute: mop_intensity
+        value: intense
+    tooltip: Change mop intensity
+    tap_action:
+      action: call-service
+      service: select.select_option
+      service_data:
+        entity_id: select.roborock_s7_mop_intensity
+        option: 'off'
+  - icon: mdi:water-alert
+    conditions:
+      - entity: vacuum.roborock_s7
+        attribute: mop_intensity
+        value: 'off'
+      - entity: vacuum.roborock_s7
+        attribute: mop_intensity
+        value: mild
+      - entity: vacuum.roborock_s7
+        attribute: mop_intensity
+        value: moderate
+      - entity: vacuum.roborock_s7
+        attribute: mop_intensity
+        value: intense
+    tooltip: Change fan speed
+    tap_action:
+      action: call-service
+      service: select.select_option
+      service_data:
+        entity_id: select.roborock_s7_mop_intensity
+        fan_speed: 'off'
+map_modes:
+  - template: vacuum_goto
+  - template: vacuum_clean_zone
+  - template: vacuum_clean_segment
+    predefined_selections:
+      - id: 16
+        label:
+          text: Cocina
+          x: 26968
+          'y': 27252
+          offset_y: 30
+        icon:
+          name: mdi:fridge-outline
+          x: 26968
+          'y': 27252
+      - id: 18
+        label:
+          text: Baño
+          x: 29937
+          'y': 27181
+          offset_y: 30
+        icon:
+          name: mdi:shower
+          x: 29937
+          'y': 27181
+      - id: 20
+        label:
+          text: Salón
+          x: 31635
+          'y': 24883
+          offset_y: 35
+        icon:
+          name: mdi:television
+          x: 31635
+          'y': 24883
+      - id: 21
+        label:
+          text: Despacho
+          x: 26720
+          'y': 24883
+          offset_y: 35
+        icon:
+          name: mdi:chair-rolling
+          x: 26720
+          'y': 24883
+      - id: 19
+        label:
+          text: Dormitorio
+          x: 26897
+          'y': 21878
+          offset_y: 35
+        icon:
+          name: mdi:bed-king
+          x: 26897
+          'y': 21878
+      - id: 17
+        label:
+          text: Hall
+          x: 29230
+          'y': 22019
+          offset_y: 35
+        icon:
+          name: mdi:coat-rack
+          x: 29230
+          'y': 22019
+    variables: {}
