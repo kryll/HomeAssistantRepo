@@ -8,7 +8,6 @@ blueprint:
       description: Tuya Smart Knob to use
       selector:
         entity:
-          domain: sensor
           integration: zha
           manufacturer: _TZ3000_4fjiwweb
           model: TS004F
