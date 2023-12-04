@@ -75,7 +75,7 @@ mode: single
 max_exceeded: silent
 trigger:
   - platform: state
-    entity_id: !input "switch"
+    entity_id: !input "remote"
     attribute: action
 action:
   - variables:
