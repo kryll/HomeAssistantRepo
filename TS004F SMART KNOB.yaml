@@ -3,11 +3,11 @@ blueprint:
   description: Automate your Tuya Smart Knob (_TZ3000_4fjiwweb) via Zigbee2MQTT.
   domain: automation
   input:
-    switch:
-      name: TS004F Tuya Smart Knob
-      description: Tuya Smart Knob to use
+    remote:
+      name: Remote
+      description: Moes Knob to use
       selector:
-        entity:
+        device:
           integration: zha
           manufacturer: _TZ3000_4fjiwweb
           model: TS004F
