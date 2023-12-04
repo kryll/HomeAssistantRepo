@@ -74,9 +74,10 @@ blueprint:
 mode: single
 max_exceeded: silent
 trigger:
-  - platform: state
-    entity_id: !input "remote"
-    attribute: action
+- platform: event
+  event_type: zha_event
+  event_data:
+    device_id: !input 'remote'
 action:
   - variables:
       command: "{{ trigger.to_state.attributes.action }}"
